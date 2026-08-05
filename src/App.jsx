@@ -1,8 +1,10 @@
 function App() {
   return (
-    <>
-      <h1>React Todo App</h1>
-    </>
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+      <h1 className="text-5xl font-bold text-yellow-400">
+        React Todo App
+      </h1>
+    </div>
   );
 }
 
