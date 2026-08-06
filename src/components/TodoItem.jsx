@@ -1,56 +1,113 @@
-function TodoItem({ todo, deleteTodo, toggleTodo }) {
+import { useState } from "react";
+
+function TodoItem({ todo, deleteTodo, toggleTodo, updateTodo }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState(todo.text);
+
+ const handleSave = () => {
+  if (editText.trim() === "") {
+    alert("Task cannot be empty.");
+    return;
+  }
+
+  updateTodo(todo.id, editText.trim());
+  setIsEditing(false);
+};
+
+  const handleCancel = () => {
+    setEditText(todo.text);
+    setIsEditing(false);
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-md border border-gray-200 p-5 hover:shadow-lg transition">
 
-      {/* Top */}
-      <div className="flex items-start gap-3">
+      {isEditing ? (
+        <>
+          {/* Edit Mode */}
 
-        <input
-          type="checkbox"
-          checked={todo.completed}
-          onChange={() => toggleTodo(todo.id)}
-          className="w-5 h-5 mt-1 accent-yellow-500 cursor-pointer"
-        />
+     <input
+  type="text"
+  value={editText}
+  onChange={(e) => setEditText(e.target.value)}
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      handleSave();
+    }
+  }}
+  className="w-full border-2 border-yellow-400 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-yellow-400"
+/>
 
-        <div className="flex-1">
+          <div className="flex justify-end gap-3 mt-5">
 
-          <h3
-            className={`text-lg font-semibold ${
-              todo.completed
-                ? "line-through text-gray-400"
-                : "text-gray-800"
-            }`}
-          >
-            {todo.text}
-          </h3>
+            <button
+              onClick={handleSave}
+             className="bg-green-500 hover:bg-green-600 hover:scale-105 transition-all duration-200 text-white px-5 py-2 rounded-lg"
+            >
+              Save
+            </button>
 
-          <p className="text-sm text-gray-500 mt-1">
-            Created Today
-          </p>
+            <button
+              onClick={handleCancel}
+              className="bg-gray-500 hover:bg-gray-600 hover:scale-105 transition-all duration-200 text-white px-5 py-2 rounded-lg"
+            >
+              Cancel
+            </button>
 
-        </div>
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Normal Mode */}
 
-      </div>
+          <div className="flex items-start gap-3">
 
-      {/* Bottom */}
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => toggleTodo(todo.id)}
+              className="w-5 h-5 mt-1 accent-yellow-500 cursor-pointer"
+            />
 
-      <div className="flex justify-end gap-3 mt-5">
+            <div className="flex-1">
 
-        <button
-          className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition"
-        >
-          ✏️ Edit
-        </button>
+              <h3
+                className={`text-lg font-semibold ${
+                  todo.completed
+                    ? "line-through text-gray-400"
+                    : "text-gray-800"
+                }`}
+              >
+                {todo.text}
+              </h3>
 
-        <button
-          onClick={() => deleteTodo(todo.id)}
-          className="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition"
-        >
-          🗑 Delete
-        </button>
+              <p className="text-sm text-gray-500 mt-1">
+  📅 {todo.createdAt}
+</p>
 
-      </div>
+            </div>
 
+          </div>
+
+          <div className="flex flex-col sm:flex-row justify-end gap-3 mt-5">
+
+            <button
+              onClick={() => setIsEditing(true)}
+             className="bg-blue-500 hover:bg-blue-600 hover:scale-105 transition-all duration-200 text-white px-4 py-2 rounded-lg"
+            >
+              ✏️ Edit
+            </button>
+
+            <button
+              onClick={() => deleteTodo(todo.id)}
+              className="bg-red-500 hover:bg-red-600 hover:scale-105 transition-all duration-200 text-white px-4 py-2 rounded-lg"
+            >
+              🗑 Delete
+            </button>
+
+          </div>
+        </>
+      )}
     </div>
   );
 }

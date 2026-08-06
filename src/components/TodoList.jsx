@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 
-function TodoList({ todos, deleteTodo, toggleTodo }) {
+function TodoList({ todos, deleteTodo, toggleTodo,   updateTodo }) {
 
   if (todos.length === 0) {
     return (
@@ -31,6 +31,7 @@ function TodoList({ todos, deleteTodo, toggleTodo }) {
           todo={todo}
           deleteTodo={deleteTodo}
           toggleTodo={toggleTodo}
+          updateTodo={updateTodo}
         />
       ))}
 

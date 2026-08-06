@@ -8,10 +8,15 @@ function App() {
 
   const addTodo = (task) => {
     const newTodo = {
-      id: Date.now(),
-      text: task,
-      completed: false,
-    };
+  id: Date.now(),
+  text: task,
+  completed: false,
+
+  createdAt: new Date().toLocaleString("en-IN", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }),
+};
 
     setTodos((prev) => [...prev, newTodo]);
   };
