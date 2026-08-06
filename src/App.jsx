@@ -7,6 +7,7 @@ import useTheme from "./hooks/useTheme";
 import Dashboard from "./components/Dashboard";
 import SearchBar from "./components/SearchBar";
 import FilterBar from "./components/FilterBar";
+import StatsBar from "./components/StatsBar";
 
 function App() {
   const [todos, setTodos] = useLocalStrorage("todos", []);
@@ -162,6 +163,12 @@ function App() {
         setSortBy={setSortBy}
         clearCompleted={clearCompleted}
         deleteAllTodos={deleteAllTodos}
+      />
+
+      <StatsBar
+        totalTasks={totalTasks}
+        activeTasks={activeTasks}
+        completedTasks={completedTasks}
       />
 
       <TodoList
