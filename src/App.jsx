@@ -9,6 +9,7 @@ import SearchBar from "./components/SearchBar";
 import FilterBar from "./components/FilterBar";
 import StatsBar from "./components/StatsBar";
 import ProgressBar from "./components/ProgressBar";
+import ThemeToggle from "./components/ThemeToggle";
 
 function App() {
   const [todos, setTodos] = useLocalStrorage("todos", []);
@@ -137,27 +138,11 @@ function App() {
     >
       <Header />
 
-      <div className="max-w-5xl mx-auto flex justify-end mt-5 px-4">
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="px-5 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition"
-        >
-          {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
-        </button>
-      </div>
+      <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
 
       <TodoForm addTodo={addTodo} />
 
-      <Dashboard
-        totalTasks={totalTasks}
-        activeTasks={activeTasks}
-        completedTasks={completedTasks}
-        progress={progress}
-      />
-
       <SearchBar search={search} setSearch={setSearch} />
-
-     <ProgressBar progress={progress} />
 
       <FilterBar
         filter={filter}
@@ -173,6 +158,15 @@ function App() {
         activeTasks={activeTasks}
         completedTasks={completedTasks}
       />
+
+      <Dashboard
+        totalTasks={totalTasks}
+        activeTasks={activeTasks}
+        completedTasks={completedTasks}
+        progress={progress}
+      />
+
+      <ProgressBar progress={progress} />
 
       <TodoList
         todos={sortedTodos}
