@@ -10,6 +10,7 @@ import FilterBar from "./components/FilterBar";
 import StatsBar from "./components/StatsBar";
 import ProgressBar from "./components/ProgressBar";
 import ThemeToggle from "./components/ThemeToggle";
+import toast from "react-hot-toast";
 
 function App() {
   const [todos, setTodos] = useLocalStrorage("todos", []);
@@ -36,10 +37,13 @@ function App() {
     };
 
     setTodos((prev) => [...prev, newTodo]);
+
+    toast.success("✅ Todo Added Successfully");
   };
 
   const deleteTodo = (id) => {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
+     toast.success("🗑️ Todo Deleted");
   };
 
   const toggleTodo = (id) => {
@@ -53,6 +57,7 @@ function App() {
           : todo,
       ),
     );
+    toast.success("✔️ Task Status Updated");
   };
 
   const updateTodo = (id, updatedText) => {
@@ -66,6 +71,7 @@ function App() {
           : todo,
       ),
     );
+     toast.success("✏️ Todo Updated");
   };
 
   const filteredTodos = todos.filter((todo) => {
@@ -118,6 +124,7 @@ function App() {
   const clearCompleted = () => {
     const activeTodos = todos.filter((todo) => !todo.completed);
     setTodos(activeTodos);
+    toast.success("🧹 Completed Tasks Cleared");
   };
 
   const deleteAllTodos = () => {
@@ -128,6 +135,7 @@ function App() {
     if (!confirmDelete) return;
 
     setTodos([]);
+    toast.success("❌ All Tasks Deleted");
   };
 
   return (
