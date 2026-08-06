@@ -150,16 +150,9 @@ function App() {
 
       <TodoForm addTodo={addTodo} />
 
-      <SearchBar search={search} setSearch={setSearch} />
+      
 
-      <FilterBar
-        filter={filter}
-        setFilter={setFilter}
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-        clearCompleted={clearCompleted}
-        deleteAllTodos={deleteAllTodos}
-      />
+     
 
       <StatsBar
         totalTasks={totalTasks}
@@ -175,6 +168,18 @@ function App() {
       />
 
       <ProgressBar progress={progress} />
+
+      <SearchBar search={search} setSearch={setSearch} />
+
+
+       <FilterBar
+        filter={filter}
+        setFilter={setFilter}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        clearCompleted={clearCompleted}
+        deleteAllTodos={deleteAllTodos}
+      />
 
       <TodoList
         todos={sortedTodos}

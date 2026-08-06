@@ -4,6 +4,8 @@ function TodoForm({ addTodo }) {
   const [task, setTask] = useState("");
   const [priority, setPriority] = useState("Medium");
 
+  const [dueDate, setDueDate] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -12,10 +14,11 @@ function TodoForm({ addTodo }) {
       return;
     }
 
-    addTodo(task, priority);
+    addTodo(task, priority, dueDate);
 
     setTask("");
     setPriority("Medium");
+    setDueDate("");
   };
 
   return (
@@ -25,7 +28,6 @@ function TodoForm({ addTodo }) {
         className="bg-white rounded-xl shadow-md p-5"
       >
         <div className="flex flex-col md:flex-row gap-4">
-
           <input
             type="text"
             placeholder="Write your task..."
@@ -44,13 +46,23 @@ function TodoForm({ addTodo }) {
             <option value="Low">🟢 Low</option>
           </select>
 
+          <div className="mt-4">
+            <label className="block mb-2 font-semibold">Due Date</label>
+
+            <input
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              className="w-full border rounded-lg px-4 py-2"
+            />
+          </div>
+
           <button
             type="submit"
             className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-semibold"
           >
             Add Task
           </button>
-
         </div>
       </form>
     </div>
