@@ -1,12 +1,12 @@
 function Header() {
   return (
     <header className="bg-slate-900 shadow-md">
-      <div className="max-w-5xl mx-auto px-5 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-yellow-400">
+      <div className="max-w-5xl mx-auto px-5 py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <h1 className="text-3xl font-bold text-yellow-400">
           React Todo
         </h1>
 
-        <p className="text-white text-sm">
+        <p className="text-white text-base">
           Organize Your Daily Tasks
         </p>
       </div>
