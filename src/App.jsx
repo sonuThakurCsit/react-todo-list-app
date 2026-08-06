@@ -103,6 +103,11 @@ function App() {
 
   const activeTasks = totalTasks - completedTasks;
 
+  const progress =
+  totalTasks === 0
+    ? 0
+    : Math.round((completedTasks / totalTasks) * 100);
+
   const clearCompleted = () => {
     const activeTodos = todos.filter((todo) => !todo.completed);
     setTodos(activeTodos);
@@ -123,6 +128,37 @@ function App() {
       <Header />
 
       <TodoForm addTodo={addTodo} />
+
+      <div className="max-w-5xl mx-auto px-5 mt-6">
+
+  <div className="bg-white rounded-xl shadow p-5">
+
+    <div className="flex justify-between mb-2">
+
+      <span className="font-semibold">
+        Project Progress
+      </span>
+
+      <span>
+        {progress}%
+      </span>
+
+    </div>
+
+    <div className="w-full h-4 bg-gray-200 rounded-full">
+
+      <div
+        className="h-4 bg-green-500 rounded-full transition-all duration-500"
+        style={{
+          width: `${progress}%`,
+        }}
+      />
+
+    </div>
+
+  </div>
+
+</div>
 
       <div className="max-w-5xl mx-auto mt-6">
         <input
@@ -204,6 +240,62 @@ function App() {
           </select>
         </div>
       </div>
+
+      <div className="max-w-5xl mx-auto px-5 mt-8">
+
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+    <div className="bg-white rounded-xl shadow p-5 text-center">
+
+      <h2 className="text-gray-500 text-sm">
+        Total Tasks
+      </h2>
+
+      <p className="text-3xl font-bold text-yellow-500 mt-2">
+        {totalTasks}
+      </p>
+
+    </div>
+
+    <div className="bg-white rounded-xl shadow p-5 text-center">
+
+      <h2 className="text-gray-500 text-sm">
+        Active
+      </h2>
+
+      <p className="text-3xl font-bold text-blue-500 mt-2">
+        {activeTasks}
+      </p>
+
+    </div>
+
+    <div className="bg-white rounded-xl shadow p-5 text-center">
+
+      <h2 className="text-gray-500 text-sm">
+        Completed
+      </h2>
+
+      <p className="text-3xl font-bold text-green-500 mt-2">
+        {completedTasks}
+      </p>
+
+    </div>
+
+    <div className="bg-white rounded-xl shadow p-5 text-center">
+
+      <h2 className="text-gray-500 text-sm">
+        Progress
+      </h2>
+
+      <p className="text-3xl font-bold text-purple-500 mt-2">
+        {progress}%
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
 
       <TodoList
         todos={sortedTodos}
