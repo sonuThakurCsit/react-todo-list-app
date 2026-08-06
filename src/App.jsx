@@ -22,13 +22,15 @@ function App() {
 
   const [darkMode, setDarkMode] = useTheme();
 
-  const addTodo = (task, priority) => {
+  const addTodo = (task, priority , dueDate) => {
     const newTodo = {
       id: Date.now(),
       text: task,
       completed: false,
 
       priority: priority,
+
+       dueDate: dueDate,
 
       createdAt: new Date().toLocaleString("en-IN", {
         dateStyle: "medium",
