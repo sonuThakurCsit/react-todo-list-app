@@ -19,6 +19,17 @@ function TodoItem({ todo, deleteTodo, toggleTodo, updateTodo }) {
     setIsEditing(false);
   };
 
+
+  const formatDate = (date) => {
+  if (!date) return "No Due Date";
+
+  return new Date(date).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+};
+
   return (
     <div className="bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white rounded-xl shadow-md border border-gray-200 p-5 hover:shadow-lg transition-all duration-300">
       {isEditing ? (
@@ -76,7 +87,25 @@ function TodoItem({ todo, deleteTodo, toggleTodo, updateTodo }) {
                 {todo.text}
               </h3>
 
-              <p className="text-sm text-gray-500 mt-1">📅 {todo.createdAt}</p>
+              <div className="mt-2 space-y-1">
+                <p className="text-sm text-gray-500">
+                  🔥 Priority :
+                  <span className="font-semibold ml-1 text-orange-500">
+                    {todo.priority}
+                  </span>
+                </p>
+
+                <p className="text-sm text-gray-500">
+                  📅 Due :
+                  <span className="font-semibold ml-1 text-blue-500">
+                    {formatDate(todo.dueDate)}
+                  </span>
+                </p>
+
+                <p className="text-sm text-gray-500">
+                  🕒 Created :<span className="ml-1">{todo.createdAt}</span>
+                </p>
+              </div>
               <div className="mt-2">
                 {todo.priority === "High" && (
                   <span className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">
