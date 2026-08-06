@@ -13,16 +13,18 @@ function App() {
   const [sortBy, setSortBy] = useState("newest");
 
   const addTodo = (task) => {
-    const newTodo = {
-      id: Date.now(),
-      text: task,
-      completed: false,
+  const newTodo = {
+  id: Date.now(),
+  text: task,
+  completed: false,
 
-      createdAt: new Date().toLocaleString("en-IN", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }),
-    };
+  priority: "Medium",
+
+  createdAt: new Date().toLocaleString("en-IN", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }),
+};
 
     setTodos((prev) => [...prev, newTodo]);
   };
