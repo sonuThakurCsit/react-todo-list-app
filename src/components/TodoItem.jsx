@@ -19,16 +19,52 @@ function TodoItem({ todo, deleteTodo, toggleTodo, updateTodo }) {
     setIsEditing(false);
   };
 
+  const getDueStatus = (dueDate) => {
+    if (!dueDate) {
+      return {
+        text: "No Due Date",
+        color: "bg-gray-500",
+      };
+    }
+
+    const today = new Date();
+    const due = new Date(dueDate);
+
+    // Time remove
+    today.setHours(0, 0, 0, 0);
+    due.setHours(0, 0, 0, 0);
+
+    if (due < today) {
+      return {
+        text: "Overdue",
+        color: "bg-red-500",
+      };
+    }
+
+    if (due.getTime() === today.getTime()) {
+      return {
+        text: "Due Today",
+        color: "bg-green-500",
+      };
+    }
+
+    return {
+      text: "Upcoming",
+      color: "bg-yellow-500",
+    };
+  };
 
   const formatDate = (date) => {
-  if (!date) return "No Due Date";
+    if (!date) return "No Due Date";
 
-  return new Date(date).toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-};
+    return new Date(date).toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
+  const dueStatus = getDueStatus(todo.dueDate);
 
   return (
     <div className="bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white rounded-xl shadow-md border border-gray-200 p-5 hover:shadow-lg transition-all duration-300">
@@ -101,6 +137,20 @@ function TodoItem({ todo, deleteTodo, toggleTodo, updateTodo }) {
                     {formatDate(todo.dueDate)}
                   </span>
                 </p>
+
+                <div className="mt-3">
+                  {todo.completed ? (
+                    <span className="bg-green-600 text-white text-xs px-3 py-1 rounded-full">
+                      Completed
+                    </span>
+                  ) : (
+                    <span
+                      className={`${dueStatus.color} text-white text-xs px-3 py-1 rounded-full`}
+                    >
+                      {dueStatus.text}
+                    </span>
+                  )}
+                </div>
 
                 <p className="text-sm text-gray-500">
                   🕒 Created :<span className="ml-1">{todo.createdAt}</span>
