@@ -5,6 +5,7 @@ import TodoList from "./components/TodoList";
 import useLocalStrorage from "./hooks/useLocalStrorage";
 import useTheme from "./hooks/useTheme";
 import Dashboard from "./components/Dashboard";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   const [todos, setTodos] = useLocalStrorage("todos", []);
@@ -143,62 +144,16 @@ function App() {
       </div>
 
       <TodoForm addTodo={addTodo} />
-      <div className="max-w-5xl mx-auto px-5 mt-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          {/* Total Tasks */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 text-center transition-all duration-300">
-            <h2 className="text-gray-500 dark:text-gray-300 text-sm font-semibold">
-              Total Tasks
-            </h2>
 
-            <p className="text-4xl font-bold text-yellow-500 mt-3">
-              {totalTasks}
-            </p>
-          </div>
-
-          {/* Active Tasks */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 text-center transition-all duration-300">
-            <h2 className="text-gray-500 dark:text-gray-300 text-sm font-semibold">
-              Active Tasks
-            </h2>
-
-            <p className="text-4xl font-bold text-blue-500 mt-3">
-              {activeTasks}
-            </p>
-          </div>
-
-          {/* Completed Tasks */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 text-center transition-all duration-300">
-            <h2 className="text-gray-500 dark:text-gray-300 text-sm font-semibold">
-              Completed
-            </h2>
-
-            <p className="text-4xl font-bold text-green-500 mt-3">
-              {completedTasks}
-            </p>
-          </div>
-
-          {/* Progress */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 text-center transition-all duration-300">
-            <h2 className="text-gray-500 dark:text-gray-300 text-sm font-semibold">
-              Progress
-            </h2>
-
-            <p className="text-4xl font-bold text-purple-500 mt-3">
-              {progress}%
-            </p>
-          </div>
-        </div>
-      </div>
+      <Dashboard
+        totalTasks={totalTasks}
+        activeTasks={activeTasks}
+        completedTasks={completedTasks}
+        progress={progress}
+      />
 
       <div className="max-w-5xl mx-auto mt-6 px-5">
-        <input
-          type="text"
-          placeholder="Search Todo..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full border rounded-lg p-3 bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white transition-all duration-300"
-        />
+        <SearchBar search={search} setSearch={setSearch} />
         <div className="flex gap-4 mt-4 flex-wrap">
           <button
             onClick={() => setFilter("all")}
@@ -276,13 +231,6 @@ function App() {
           </select>
         </div>
       </div>
-
-      <Dashboard
-        totalTasks={totalTasks}
-        activeTasks={activeTasks}
-        completedTasks={completedTasks}
-        progress={progress}
-      />
 
       <TodoList
         todos={sortedTodos}
