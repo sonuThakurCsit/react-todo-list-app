@@ -12,19 +12,19 @@ function App() {
 
   const [sortBy, setSortBy] = useState("newest");
 
-  const addTodo = (task , priority) => {
-  const newTodo = {
-  id: Date.now(),
-  text: task,
-  completed: false,
+  const addTodo = (task, priority) => {
+    const newTodo = {
+      id: Date.now(),
+      text: task,
+      completed: false,
 
-  priority: priority,
+      priority: priority,
 
-  createdAt: new Date().toLocaleString("en-IN", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }),
-};
+      createdAt: new Date().toLocaleString("en-IN", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }),
+    };
 
     setTodos((prev) => [...prev, newTodo]);
   };
@@ -75,12 +75,26 @@ function App() {
     return matchesSearch;
   });
 
+  const priorityOrder = {
+    High: 3,
+    Medium: 2,
+    Low: 1,
+  };
+
   const sortedTodos = [...filteredTodos].sort((a, b) => {
     if (sortBy === "newest") {
       return b.id - a.id;
     }
 
-    return a.id - b.id;
+    if (sortBy === "oldest") {
+      return a.id - b.id;
+    }
+
+    if (sortBy === "priority") {
+      return priorityOrder[b.priority] - priorityOrder[a.priority];
+    }
+
+    return 0;
   });
 
   const totalTasks = todos.length;
@@ -119,84 +133,77 @@ function App() {
           className="w-full border rounded-lg p-3"
         />
 
-        
-      <div className="flex gap-3 mt-4 flex-wrap">
-        <button
-          onClick={() => setFilter("all")}
-          className={`px-5 py-2 rounded ${
-            filter === "all" ? "bg-yellow-500 text-white" : "bg-gray-200"
-          }`}
-        >
-          All
-        </button>
+        <div className="flex gap-3 mt-4 flex-wrap">
+          <button
+            onClick={() => setFilter("all")}
+            className={`px-5 py-2 rounded ${
+              filter === "all" ? "bg-yellow-500 text-white" : "bg-gray-200"
+            }`}
+          >
+            All
+          </button>
 
-        <button
-          onClick={() => setFilter("active")}
-          className={`px-5 py-2 rounded ${
-            filter === "active" ? "bg-blue-500 text-white" : "bg-gray-200"
-          }`}
-        >
-          Active
-        </button>
+          <button
+            onClick={() => setFilter("active")}
+            className={`px-5 py-2 rounded ${
+              filter === "active" ? "bg-blue-500 text-white" : "bg-gray-200"
+            }`}
+          >
+            Active
+          </button>
 
-        <button
-          onClick={() => setFilter("completed")}
-          className={`px-5 py-2 rounded ${
-            filter === "completed" ? "bg-green-500 text-white" : "bg-gray-200"
-          }`}
-        >
-          Completed
-        </button>
+          <button
+            onClick={() => setFilter("completed")}
+            className={`px-5 py-2 rounded ${
+              filter === "completed" ? "bg-green-500 text-white" : "bg-gray-200"
+            }`}
+          >
+            Completed
+          </button>
+        </div>
+
+        <div className="mt-5 flex gap-6 flex-wrap text-sm font-semibold">
+          <p>
+            Total :<span className="text-yellow-600"> {totalTasks}</span>
+          </p>
+
+          <p>
+            Active :<span className="text-blue-600"> {activeTasks}</span>
+          </p>
+
+          <p>
+            Completed :<span className="text-green-600"> {completedTasks}</span>
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-3 mt-6">
+          <button
+            onClick={clearCompleted}
+            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
+          >
+            Clear Completed
+          </button>
+
+          <button
+            onClick={deleteAllTodos}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+          >
+            Delete All
+          </button>
+
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="border rounded-lg px-3 py-2"
+          >
+            <option value="newest">Newest First</option>
+
+            <option value="oldest">Oldest First</option>
+
+            <option value="priority">Priority</option>
+          </select>
+        </div>
       </div>
-
-      <div className="mt-5 flex gap-6 flex-wrap text-sm font-semibold">
-        <p>
-          Total :<span className="text-yellow-600"> {totalTasks}</span>
-        </p>
-
-        <p>
-          Active :<span className="text-blue-600"> {activeTasks}</span>
-        </p>
-
-        <p>
-          Completed :<span className="text-green-600"> {completedTasks}</span>
-        </p>
-      </div>
-
-      
-      <div className="flex flex-wrap gap-3 mt-6">
-        <button
-          onClick={clearCompleted}
-          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
-        >
-          Clear Completed
-        </button>
-
-        <button
-          onClick={deleteAllTodos}
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-        >
-          Delete All
-        </button>
-
-        <select
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value)}
-          className="border rounded-lg px-3 py-2"
-        >
-          <option value="newest">Newest First</option>
-
-          <option value="oldest">Oldest First</option>
-        </select>
-      </div>
-
-
-
-      </div>
-
-
-      
-
 
       <TodoList
         todos={sortedTodos}
