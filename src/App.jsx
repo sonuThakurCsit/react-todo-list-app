@@ -2,25 +2,27 @@ import { useState } from "react";
 import Header from "./components/Header";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
-import useLocalStorage from "./hooks/useLocalStrorage";
+import useLocalStrorage from "./hooks/useLocalStrorage";
 
 function App() {
-  const [todos, setTodos] = useLocalStorage("todos", []);
+  const [todos, setTodos] = useLocalStrorage("todos", []);
   const [search, setSearch] = useState("");
 
- const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("all");
+
+  const [sortBy, setSortBy] = useState("newest");
 
   const addTodo = (task) => {
     const newTodo = {
-  id: Date.now(),
-  text: task,
-  completed: false,
+      id: Date.now(),
+      text: task,
+      completed: false,
 
-  createdAt: new Date().toLocaleString("en-IN", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }),
-};
+      createdAt: new Date().toLocaleString("en-IN", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }),
+    };
 
     setTodos((prev) => [...prev, newTodo]);
   };
@@ -37,8 +39,8 @@ function App() {
               ...todo,
               completed: !todo.completed,
             }
-          : todo
-      )
+          : todo,
+      ),
     );
   };
 
@@ -50,35 +52,55 @@ function App() {
               ...todo,
               text: updatedText,
             }
-          : todo
-      )
+          : todo,
+      ),
     );
   };
 
   const filteredTodos = todos.filter((todo) => {
+    const matchesSearch = todo.text
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
-  const matchesSearch = todo.text
-    .toLowerCase()
-    .includes(search.toLowerCase());
+    if (filter === "active") {
+      return matchesSearch && !todo.completed;
+    }
 
-  if (filter === "active") {
-    return matchesSearch && !todo.completed;
-  }
+    if (filter === "completed") {
+      return matchesSearch && todo.completed;
+    }
 
-  if (filter === "completed") {
-    return matchesSearch && todo.completed;
-  }
+    return matchesSearch;
+  });
 
-  return matchesSearch;
-});
+  const sortedTodos = [...filteredTodos].sort((a, b) => {
+    if (sortBy === "newest") {
+      return b.id - a.id;
+    }
 
-const totalTasks = todos.length;
+    return a.id - b.id;
+  });
 
-const completedTasks = todos.filter(
-  (todo) => todo.completed
-).length;
+  const totalTasks = todos.length;
 
-const activeTasks = totalTasks - completedTasks;
+  const completedTasks = todos.filter((todo) => todo.completed).length;
+
+  const activeTasks = totalTasks - completedTasks;
+
+  const clearCompleted = () => {
+    const activeTodos = todos.filter((todo) => !todo.completed);
+    setTodos(activeTodos);
+  };
+
+  const deleteAllTodos = () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete all tasks?",
+    );
+
+    if (!confirmDelete) return;
+
+    setTodos([]);
+  };
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -87,84 +109,95 @@ const activeTasks = totalTasks - completedTasks;
       <TodoForm addTodo={addTodo} />
 
       <div className="max-w-5xl mx-auto mt-6">
+        <input
+          type="text"
+          placeholder="Search Todo..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full border rounded-lg p-3"
+        />
 
-<input
-type="text"
-placeholder="Search Todo..."
-value={search}
-onChange={(e)=>setSearch(e.target.value)}
-className="w-full border rounded-lg p-3"
-/>
+        
+      <div className="flex gap-3 mt-4 flex-wrap">
+        <button
+          onClick={() => setFilter("all")}
+          className={`px-5 py-2 rounded ${
+            filter === "all" ? "bg-yellow-500 text-white" : "bg-gray-200"
+          }`}
+        >
+          All
+        </button>
 
-</div>
+        <button
+          onClick={() => setFilter("active")}
+          className={`px-5 py-2 rounded ${
+            filter === "active" ? "bg-blue-500 text-white" : "bg-gray-200"
+          }`}
+        >
+          Active
+        </button>
 
-<div className="flex gap-3 mt-4 flex-wrap">
+        <button
+          onClick={() => setFilter("completed")}
+          className={`px-5 py-2 rounded ${
+            filter === "completed" ? "bg-green-500 text-white" : "bg-gray-200"
+          }`}
+        >
+          Completed
+        </button>
+      </div>
 
-<button
-onClick={()=>setFilter("all")}
-className={`px-5 py-2 rounded ${
-filter==="all"
-?"bg-yellow-500 text-white"
-:"bg-gray-200"
-}`}
->
-All
-</button>
+      <div className="mt-5 flex gap-6 flex-wrap text-sm font-semibold">
+        <p>
+          Total :<span className="text-yellow-600"> {totalTasks}</span>
+        </p>
 
-<button
-onClick={()=>setFilter("active")}
-className={`px-5 py-2 rounded ${
-filter==="active"
-?"bg-blue-500 text-white"
-:"bg-gray-200"
-}`}
->
-Active
-</button>
+        <p>
+          Active :<span className="text-blue-600"> {activeTasks}</span>
+        </p>
 
-<button
-onClick={()=>setFilter("completed")}
-className={`px-5 py-2 rounded ${
-filter==="completed"
-?"bg-green-500 text-white"
-:"bg-gray-200"
-}`}
->
-Completed
-</button>
+        <p>
+          Completed :<span className="text-green-600"> {completedTasks}</span>
+        </p>
+      </div>
 
-</div>
+      
+      <div className="flex flex-wrap gap-3 mt-6">
+        <button
+          onClick={clearCompleted}
+          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
+        >
+          Clear Completed
+        </button>
 
-<div className="mt-5 flex gap-6 flex-wrap text-sm font-semibold">
+        <button
+          onClick={deleteAllTodos}
+          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+        >
+          Delete All
+        </button>
 
-<p>
-Total :
-<span className="text-yellow-600">
-{" "}
-{totalTasks}
-</span>
-</p>
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="border rounded-lg px-3 py-2"
+        >
+          <option value="newest">Newest First</option>
 
-<p>
-Active :
-<span className="text-blue-600">
-{" "}
-{activeTasks}
-</span>
-</p>
+          <option value="oldest">Oldest First</option>
+        </select>
+      </div>
 
-<p>
-Completed :
-<span className="text-green-600">
-{" "}
-{completedTasks}
-</span>
-</p>
 
-</div>
+
+      </div>
+
+
+      
+
 
       <TodoList
-        todos={filteredTodos}
+        todos={sortedTodos}
         deleteTodo={deleteTodo}
         toggleTodo={toggleTodo}
         updateTodo={updateTodo}

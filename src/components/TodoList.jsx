@@ -1,11 +1,15 @@
 import TodoItem from "./TodoItem";
 
-function TodoList({ todos, deleteTodo, toggleTodo,   updateTodo }) {
+function TodoList({
+  todos,
+  deleteTodo,
+  toggleTodo,
+  updateTodo
+}) {
 
   if (todos.length === 0) {
     return (
       <div className="max-w-4xl mx-auto mt-10 px-5">
-
         <div className="bg-white rounded-xl shadow p-10 text-center">
 
           <h2 className="text-2xl font-semibold text-gray-700">
@@ -17,7 +21,6 @@ function TodoList({ todos, deleteTodo, toggleTodo,   updateTodo }) {
           </p>
 
         </div>
-
       </div>
     );
   }
