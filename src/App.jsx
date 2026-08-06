@@ -8,6 +8,7 @@ import Dashboard from "./components/Dashboard";
 import SearchBar from "./components/SearchBar";
 import FilterBar from "./components/FilterBar";
 import StatsBar from "./components/StatsBar";
+import ProgressBar from "./components/ProgressBar";
 
 function App() {
   const [todos, setTodos] = useLocalStrorage("todos", []);
@@ -155,6 +156,8 @@ function App() {
       />
 
       <SearchBar search={search} setSearch={setSearch} />
+
+     <ProgressBar progress={progress} />
 
       <FilterBar
         filter={filter}
