@@ -20,7 +20,7 @@ function TodoItem({ todo, deleteTodo, toggleTodo, updateTodo }) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-200 p-5 hover:shadow-lg transition">
+    <div className="bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white rounded-xl shadow-md border border-gray-200 p-5 hover:shadow-lg transition-all duration-300">
       {isEditing ? (
         <>
           {/* Edit Mode */}

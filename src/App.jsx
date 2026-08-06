@@ -3,6 +3,8 @@ import Header from "./components/Header";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 import useLocalStrorage from "./hooks/useLocalStrorage";
+import useTheme from "./hooks/useTheme";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const [todos, setTodos] = useLocalStrorage("todos", []);
@@ -11,6 +13,8 @@ function App() {
   const [filter, setFilter] = useState("all");
 
   const [sortBy, setSortBy] = useState("newest");
+
+  const [darkMode, setDarkMode] = useTheme();
 
   const addTodo = (task, priority) => {
     const newTodo = {
@@ -104,9 +108,7 @@ function App() {
   const activeTasks = totalTasks - completedTasks;
 
   const progress =
-  totalTasks === 0
-    ? 0
-    : Math.round((completedTasks / totalTasks) * 100);
+    totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
 
   const clearCompleted = () => {
     const activeTodos = todos.filter((todo) => !todo.completed);
@@ -124,56 +126,86 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div
+      className={`min-h-screen transition-all duration-300 ${
+        darkMode ? "bg-slate-900 text-white" : "bg-slate-100 text-black"
+      }`}
+    >
       <Header />
 
+      <div className="max-w-5xl mx-auto flex justify-end mt-5 px-4">
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="px-5 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition"
+        >
+          {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
+        </button>
+      </div>
+
       <TodoForm addTodo={addTodo} />
+      <div className="max-w-5xl mx-auto px-5 mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          {/* Total Tasks */}
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 text-center transition-all duration-300">
+            <h2 className="text-gray-500 dark:text-gray-300 text-sm font-semibold">
+              Total Tasks
+            </h2>
 
-      <div className="max-w-5xl mx-auto px-5 mt-6">
+            <p className="text-4xl font-bold text-yellow-500 mt-3">
+              {totalTasks}
+            </p>
+          </div>
 
-  <div className="bg-white rounded-xl shadow p-5">
+          {/* Active Tasks */}
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 text-center transition-all duration-300">
+            <h2 className="text-gray-500 dark:text-gray-300 text-sm font-semibold">
+              Active Tasks
+            </h2>
 
-    <div className="flex justify-between mb-2">
+            <p className="text-4xl font-bold text-blue-500 mt-3">
+              {activeTasks}
+            </p>
+          </div>
 
-      <span className="font-semibold">
-        Project Progress
-      </span>
+          {/* Completed Tasks */}
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 text-center transition-all duration-300">
+            <h2 className="text-gray-500 dark:text-gray-300 text-sm font-semibold">
+              Completed
+            </h2>
 
-      <span>
-        {progress}%
-      </span>
+            <p className="text-4xl font-bold text-green-500 mt-3">
+              {completedTasks}
+            </p>
+          </div>
 
-    </div>
+          {/* Progress */}
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 text-center transition-all duration-300">
+            <h2 className="text-gray-500 dark:text-gray-300 text-sm font-semibold">
+              Progress
+            </h2>
 
-    <div className="w-full h-4 bg-gray-200 rounded-full">
+            <p className="text-4xl font-bold text-purple-500 mt-3">
+              {progress}%
+            </p>
+          </div>
+        </div>
+      </div>
 
-      <div
-        className="h-4 bg-green-500 rounded-full transition-all duration-500"
-        style={{
-          width: `${progress}%`,
-        }}
-      />
-
-    </div>
-
-  </div>
-
-</div>
-
-      <div className="max-w-5xl mx-auto mt-6">
+      <div className="max-w-5xl mx-auto mt-6 px-5">
         <input
           type="text"
           placeholder="Search Todo..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full border rounded-lg p-3"
+          className="w-full border rounded-lg p-3 bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white transition-all duration-300"
         />
-
-        <div className="flex gap-3 mt-4 flex-wrap">
+        <div className="flex gap-4 mt-4 flex-wrap">
           <button
             onClick={() => setFilter("all")}
-            className={`px-5 py-2 rounded ${
-              filter === "all" ? "bg-yellow-500 text-white" : "bg-gray-200"
+            className={`px-5 py-2 rounded-lg transition-all duration-300 ${
+              filter === "all"
+                ? "bg-yellow-500 text-white"
+                : "bg-gray-200 dark:bg-slate-700 dark:text-white hover:bg-gray-300"
             }`}
           >
             All
@@ -181,8 +213,10 @@ function App() {
 
           <button
             onClick={() => setFilter("active")}
-            className={`px-5 py-2 rounded ${
-              filter === "active" ? "bg-blue-500 text-white" : "bg-gray-200"
+            className={`px-5 py-2 rounded-lg transition-all duration-300 ${
+              filter === "active"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 dark:bg-slate-700 dark:text-white hover:bg-gray-300"
             }`}
           >
             Active
@@ -190,8 +224,10 @@ function App() {
 
           <button
             onClick={() => setFilter("completed")}
-            className={`px-5 py-2 rounded ${
-              filter === "completed" ? "bg-green-500 text-white" : "bg-gray-200"
+            className={`px-5 py-2 rounded-lg transition-all duration-300 ${
+              filter === "completed"
+                ? "bg-green-500 text-white"
+                : "bg-gray-200 dark:bg-slate-700 dark:text-white hover:bg-gray-300"
             }`}
           >
             Completed
@@ -241,61 +277,12 @@ function App() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-5 mt-8">
-
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-
-    <div className="bg-white rounded-xl shadow p-5 text-center">
-
-      <h2 className="text-gray-500 text-sm">
-        Total Tasks
-      </h2>
-
-      <p className="text-3xl font-bold text-yellow-500 mt-2">
-        {totalTasks}
-      </p>
-
-    </div>
-
-    <div className="bg-white rounded-xl shadow p-5 text-center">
-
-      <h2 className="text-gray-500 text-sm">
-        Active
-      </h2>
-
-      <p className="text-3xl font-bold text-blue-500 mt-2">
-        {activeTasks}
-      </p>
-
-    </div>
-
-    <div className="bg-white rounded-xl shadow p-5 text-center">
-
-      <h2 className="text-gray-500 text-sm">
-        Completed
-      </h2>
-
-      <p className="text-3xl font-bold text-green-500 mt-2">
-        {completedTasks}
-      </p>
-
-    </div>
-
-    <div className="bg-white rounded-xl shadow p-5 text-center">
-
-      <h2 className="text-gray-500 text-sm">
-        Progress
-      </h2>
-
-      <p className="text-3xl font-bold text-purple-500 mt-2">
-        {progress}%
-      </p>
-
-    </div>
-
-  </div>
-
-</div>
+      <Dashboard
+        totalTasks={totalTasks}
+        activeTasks={activeTasks}
+        completedTasks={completedTasks}
+        progress={progress}
+      />
 
       <TodoList
         todos={sortedTodos}
