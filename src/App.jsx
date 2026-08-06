@@ -1,10 +1,10 @@
-import { useState } from "react";
 import Header from "./components/Header";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
+import useLocalStorage from "./hooks/useLocalStrorage";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useLocalStorage("todos", []);
 
   const addTodo = (task) => {
     const newTodo = {
@@ -13,7 +13,37 @@ function App() {
       completed: false,
     };
 
-    setTodos([...todos, newTodo]);
+    setTodos((prev) => [...prev, newTodo]);
+  };
+
+  const deleteTodo = (id) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  };
+
+  const toggleTodo = (id) => {
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              completed: !todo.completed,
+            }
+          : todo
+      )
+    );
+  };
+
+  const updateTodo = (id, updatedText) => {
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              text: updatedText,
+            }
+          : todo
+      )
+    );
   };
 
   return (
@@ -22,7 +52,12 @@ function App() {
 
       <TodoForm addTodo={addTodo} />
 
-      <TodoList todos={todos} />
+      <TodoList
+        todos={todos}
+        deleteTodo={deleteTodo}
+        toggleTodo={toggleTodo}
+        updateTodo={updateTodo}
+      />
     </div>
   );
 }
