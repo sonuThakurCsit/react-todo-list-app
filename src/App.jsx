@@ -6,6 +6,7 @@ import useLocalStrorage from "./hooks/useLocalStrorage";
 import useTheme from "./hooks/useTheme";
 import Dashboard from "./components/Dashboard";
 import SearchBar from "./components/SearchBar";
+import FilterBar from "./components/FilterBar";
 
 function App() {
   const [todos, setTodos] = useLocalStrorage("todos", []);
@@ -152,85 +153,16 @@ function App() {
         progress={progress}
       />
 
-      <div className="max-w-5xl mx-auto mt-6 px-5">
-        <SearchBar search={search} setSearch={setSearch} />
-        <div className="flex gap-4 mt-4 flex-wrap">
-          <button
-            onClick={() => setFilter("all")}
-            className={`px-5 py-2 rounded-lg transition-all duration-300 ${
-              filter === "all"
-                ? "bg-yellow-500 text-white"
-                : "bg-gray-200 dark:bg-slate-700 dark:text-white hover:bg-gray-300"
-            }`}
-          >
-            All
-          </button>
+      <SearchBar search={search} setSearch={setSearch} />
 
-          <button
-            onClick={() => setFilter("active")}
-            className={`px-5 py-2 rounded-lg transition-all duration-300 ${
-              filter === "active"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 dark:bg-slate-700 dark:text-white hover:bg-gray-300"
-            }`}
-          >
-            Active
-          </button>
-
-          <button
-            onClick={() => setFilter("completed")}
-            className={`px-5 py-2 rounded-lg transition-all duration-300 ${
-              filter === "completed"
-                ? "bg-green-500 text-white"
-                : "bg-gray-200 dark:bg-slate-700 dark:text-white hover:bg-gray-300"
-            }`}
-          >
-            Completed
-          </button>
-        </div>
-
-        <div className="mt-5 flex gap-6 flex-wrap text-sm font-semibold">
-          <p>
-            Total :<span className="text-yellow-600"> {totalTasks}</span>
-          </p>
-
-          <p>
-            Active :<span className="text-blue-600"> {activeTasks}</span>
-          </p>
-
-          <p>
-            Completed :<span className="text-green-600"> {completedTasks}</span>
-          </p>
-        </div>
-
-        <div className="flex flex-wrap gap-3 mt-6">
-          <button
-            onClick={clearCompleted}
-            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
-          >
-            Clear Completed
-          </button>
-
-          <button
-            onClick={deleteAllTodos}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-          >
-            Delete All
-          </button>
-
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="border rounded-lg px-3 py-2"
-          >
-            <option value="newest">Newest First</option>
-
-            <option value="oldest">Oldest First</option>
-
-            <option value="priority">Priority</option>
-          </select>
-        </div>
-      </div>
+      <FilterBar
+        filter={filter}
+        setFilter={setFilter}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        clearCompleted={clearCompleted}
+        deleteAllTodos={deleteAllTodos}
+      />
 
       <TodoList
         todos={sortedTodos}
