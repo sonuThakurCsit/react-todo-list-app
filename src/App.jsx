@@ -18,6 +18,8 @@ function App() {
 
   const [filter, setFilter] = useState("all");
 
+  const [categoryFilter, setCategoryFilter] = useState("all");
+
   const [sortBy, setSortBy] = useState("newest");
 
   const [darkMode, setDarkMode] = useTheme();
@@ -32,7 +34,7 @@ function App() {
 
       dueDate: dueDate,
 
-       category: category,
+      category: category,
 
       createdAt: new Date().toLocaleString("en-IN", {
         dateStyle: "medium",
@@ -77,21 +79,20 @@ function App() {
     );
     toast.success("✏️ Todo Updated");
   };
-
   const filteredTodos = todos.filter((todo) => {
     const matchesSearch = todo.text
       .toLowerCase()
       .includes(search.toLowerCase());
 
-    if (filter === "active") {
-      return matchesSearch && !todo.completed;
-    }
+    const matchesStatus =
+      filter === "all" ||
+      (filter === "active" && !todo.completed) ||
+      (filter === "completed" && todo.completed);
 
-    if (filter === "completed") {
-      return matchesSearch && todo.completed;
-    }
+    const matchesCategory =
+      categoryFilter === "all" || todo.category === categoryFilter;
 
-    return matchesSearch;
+    return matchesSearch && matchesStatus && matchesCategory;
   });
 
   const priorityOrder = {
@@ -142,69 +143,55 @@ function App() {
     toast.success("❌ All Tasks Deleted");
   };
 
-  
-   return (
-<div
-  className={`min-h-screen transition-colors  ${
-    darkMode
-      ? "bg-slate-950 text-white"
-      : "bg-slate-100 text-gray-900"
-  }`}
+  return (
+    <div
+      className={`min-h-screen transition-colors  ${
+        darkMode ? "bg-slate-950 text-white" : "bg-slate-100 text-gray-900"
+      }`}
+    >
+      <Header />
 
-  >
-    <Header />
+      <div className="px-6">
+        <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
 
-    <div className="px-6">
-    
+        <TodoForm addTodo={addTodo} />
 
-    <ThemeToggle
-      darkMode={darkMode}
-      setDarkMode={setDarkMode}
-    />
+        <Dashboard
+          totalTasks={totalTasks}
+          activeTasks={activeTasks}
+          completedTasks={completedTasks}
+          progress={progress}
+        />
 
-    
+        <ProgressBar progress={progress} />
 
-      <TodoForm addTodo={addTodo} />
+        <SearchBar search={search} setSearch={setSearch} />
+        <FilterBar
+          filter={filter}
+          setFilter={setFilter}
+          categoryFilter={categoryFilter}
+          setCategoryFilter={setCategoryFilter}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          clearCompleted={clearCompleted}
+          deleteAllTodos={deleteAllTodos}
+        />
 
-      <Dashboard
-        totalTasks={totalTasks}
-        activeTasks={activeTasks}
-        completedTasks={completedTasks}
-        progress={progress}
-      />
+        <StatsBar
+          totalTasks={totalTasks}
+          activeTasks={activeTasks}
+          completedTasks={completedTasks}
+        />
 
-      <ProgressBar progress={progress} />
-
-      <SearchBar
-        search={search}
-        setSearch={setSearch}
-      />
-
-      <FilterBar
-        filter={filter}
-        setFilter={setFilter}
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-        clearCompleted={clearCompleted}
-        deleteAllTodos={deleteAllTodos}
-      />
-
-      <StatsBar
-        totalTasks={totalTasks}
-        activeTasks={activeTasks}
-        completedTasks={completedTasks}
-      />
-
-      <TodoList
-        todos={sortedTodos}
-        deleteTodo={deleteTodo}
-        toggleTodo={toggleTodo}
-        updateTodo={updateTodo}
-      />
+        <TodoList
+          todos={sortedTodos}
+          deleteTodo={deleteTodo}
+          toggleTodo={toggleTodo}
+          updateTodo={updateTodo}
+        />
+      </div>
     </div>
-    
-  </div>
-);
+  );
 }
 
 export default App;
