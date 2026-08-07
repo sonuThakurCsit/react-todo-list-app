@@ -7,7 +7,7 @@ function FilterBar({
   deleteAllTodos,
 }) {
   return (
-    <div className="max-w-5xl mx-auto px-5 mt-6">
+    <div className="w-full mt-6">
 
       {/* Filter Buttons */}
       <div className="flex gap-4 flex-wrap">

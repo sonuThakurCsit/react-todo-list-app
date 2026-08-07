@@ -1,6 +1,6 @@
 function SearchBar({ search, setSearch }) {
   return (
-    <div className="max-w-5xl mx-auto mt-6 px-5">
+    <div className="w-full mt-5">
       <input
         type="text"
         placeholder="🔍 Search Todo..."

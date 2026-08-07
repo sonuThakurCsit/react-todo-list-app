@@ -66,8 +66,30 @@ function TodoItem({ todo, deleteTodo, toggleTodo, updateTodo }) {
 
   const dueStatus = getDueStatus(todo.dueDate);
 
+  const getCategoryStyle = (category) => {
+    switch (category) {
+      case "Study":
+        return "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300";
+
+      case "Work":
+        return "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300";
+
+      case "Personal":
+        return "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300";
+
+      case "Shopping":
+        return "bg-pink-100 text-pink-700 dark:bg-pink-900/40 dark:text-pink-300";
+
+      case "Health":
+        return "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300";
+
+      default:
+        return "bg-gray-100 text-gray-700 dark:bg-slate-700 dark:text-gray-300";
+    }
+  };
+
   return (
-    <div className="bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white rounded-xl shadow-md border border-gray-200 p-5 hover:shadow-lg transition-all duration-300">
+    <div className="bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white rounded-xl shadow-md border border-gray-200 p-5 mb-5 hover:shadow-lg transition-all duration-300 ">
       {isEditing ? (
         <>
           {/* Edit Mode */}
@@ -122,6 +144,22 @@ function TodoItem({ todo, deleteTodo, toggleTodo, updateTodo }) {
               >
                 {todo.text}
               </h3>
+
+              <div className="mt-3 flex flex-wrap gap-2">
+                <span
+                  className={`text-xs font-semibold px-3 py-1 rounded-full ${getCategoryStyle(
+                    todo.category,
+                  )}`}
+                >
+                  {todo.category === "Study" && "📚"}
+                  {todo.category === "Work" && "💼"}
+                  {todo.category === "Personal" && "🏠"}
+                  {todo.category === "Shopping" && "🛒"}
+                  {todo.category === "Health" && "❤️"}
+
+                  <span className="ml-1">{todo.category || "No Category"}</span>
+                </span>
+              </div>
 
               <div className="mt-2 space-y-1">
                 <p className="text-sm text-gray-500">

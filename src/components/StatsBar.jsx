@@ -4,7 +4,7 @@ function StatsBar({
   completedTasks,
 }) {
   return (
-    <div className="max-w-5xl mx-auto px-5 mt-5">
+    <div className="w-full mt-6">
 
       <div className="flex flex-wrap gap-6 text-sm font-semibold">
 

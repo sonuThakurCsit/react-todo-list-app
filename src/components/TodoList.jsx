@@ -26,7 +26,7 @@ function TodoList({
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-8 px-5 space-y-5">
+    <div className="w-full mt-6 ">
 
       {todos.map((todo) => (
         <TodoItem

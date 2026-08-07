@@ -5,7 +5,7 @@ function Dashboard({
   progress,
 }) {
   return (
-    <div className="max-w-5xl mx-auto px-5 mt-8">
+    <div  className="mt-5">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
 
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 text-center transition-all duration-300">

@@ -22,7 +22,7 @@ function App() {
 
   const [darkMode, setDarkMode] = useTheme();
 
-  const addTodo = (task, priority , dueDate) => {
+  const addTodo = (task, priority, dueDate, category) => {
     const newTodo = {
       id: Date.now(),
       text: task,
@@ -30,7 +30,9 @@ function App() {
 
       priority: priority,
 
-       dueDate: dueDate,
+      dueDate: dueDate,
+
+       category: category,
 
       createdAt: new Date().toLocaleString("en-IN", {
         dateStyle: "medium",
@@ -40,12 +42,12 @@ function App() {
 
     setTodos((prev) => [...prev, newTodo]);
 
-    toast.success("✅ Todo Added Successfully");
+    toast.success(" Todo Added Successfully");
   };
 
   const deleteTodo = (id) => {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
-     toast.success("🗑️ Todo Deleted");
+    toast.success("🗑️ Todo Deleted");
   };
 
   const toggleTodo = (id) => {
@@ -73,7 +75,7 @@ function App() {
           : todo,
       ),
     );
-     toast.success("✏️ Todo Updated");
+    toast.success("✏️ Todo Updated");
   };
 
   const filteredTodos = todos.filter((todo) => {
@@ -140,27 +142,29 @@ function App() {
     toast.success("❌ All Tasks Deleted");
   };
 
-  return (
-    <div
-      className={`min-h-screen transition-all duration-300 ${
-        darkMode ? "bg-slate-900 text-white" : "bg-slate-100 text-black"
-      }`}
-    >
-      <Header />
+  
+   return (
+<div
+  className={`min-h-screen transition-colors  ${
+    darkMode
+      ? "bg-slate-950 text-white"
+      : "bg-slate-100 text-gray-900"
+  }`}
 
-      <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+  >
+    <Header />
+
+    <div className="px-6">
+    
+
+    <ThemeToggle
+      darkMode={darkMode}
+      setDarkMode={setDarkMode}
+    />
+
+    
 
       <TodoForm addTodo={addTodo} />
-
-      
-
-     
-
-      <StatsBar
-        totalTasks={totalTasks}
-        activeTasks={activeTasks}
-        completedTasks={completedTasks}
-      />
 
       <Dashboard
         totalTasks={totalTasks}
@@ -171,16 +175,24 @@ function App() {
 
       <ProgressBar progress={progress} />
 
-      <SearchBar search={search} setSearch={setSearch} />
+      <SearchBar
+        search={search}
+        setSearch={setSearch}
+      />
 
-
-       <FilterBar
+      <FilterBar
         filter={filter}
         setFilter={setFilter}
         sortBy={sortBy}
         setSortBy={setSortBy}
         clearCompleted={clearCompleted}
         deleteAllTodos={deleteAllTodos}
+      />
+
+      <StatsBar
+        totalTasks={totalTasks}
+        activeTasks={activeTasks}
+        completedTasks={completedTasks}
       />
 
       <TodoList
@@ -190,7 +202,9 @@ function App() {
         updateTodo={updateTodo}
       />
     </div>
-  );
+    
+  </div>
+);
 }
 
 export default App;
