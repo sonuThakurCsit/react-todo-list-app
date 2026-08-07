@@ -5,6 +5,7 @@ function TodoForm({ addTodo }) {
   const [priority, setPriority] = useState("Medium");
 
   const [dueDate, setDueDate] = useState("");
+  const [category, setCategory] = useState("Study");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,11 +15,12 @@ function TodoForm({ addTodo }) {
       return;
     }
 
-    addTodo(task, priority, dueDate);
+    addTodo(task, priority, dueDate, category);
 
     setTask("");
     setPriority("Medium");
     setDueDate("");
+    setCategory("Study");
   };
 
   return (
@@ -55,6 +57,22 @@ function TodoForm({ addTodo }) {
               onChange={(e) => setDueDate(e.target.value)}
               className="w-full border rounded-lg px-4 py-2"
             />
+          </div>
+
+          <div className="mt-4">
+            <label className="block mb-2 font-semibold">Category</label>
+
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full border rounded-lg px-4 py-2"
+            >
+              <option value="Study">📚 Study</option>
+              <option value="Work">💼 Work</option>
+              <option value="Personal">🏠 Personal</option>
+              <option value="Shopping">🛒 Shopping</option>
+              <option value="Health">❤️ Health</option>
+            </select>
           </div>
 
           <button
