@@ -95,10 +95,13 @@ react-todo-list-app/
 ├── tailwind.config.js
 └── README.md
 
-## Author
+```
 
-sonu kumar 
+---
 
-GitHub:https://github.com/sonuThakurCsit
+## 👨‍💻 Author
 
-linkedIN : https://www.linkedin.com/in/sonu-kumar-a9202b415/
+**Sonu Kumar**
+
+- GitHub: [sonuThakurCsit](https://github.com/sonuThakurCsit)
+- LinkedIn: [Sonu Kumar](https://www.linkedin.com/in/sonu-kumar-a9202b415/)
