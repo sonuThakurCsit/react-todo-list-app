@@ -1,16 +1,104 @@
-# React + Vite
+# 📝 React Todo List App
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A modern and responsive Todo List application built with React.js and Tailwind CSS.
 
-Currently, two official plugins are available:
+This project was created to practice React fundamentals, component-based architecture, state management, custom hooks, localStorage, filtering, sorting, dark mode, and responsive UI design.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+🔗 Live Demo: Coming Soon
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 📸 Preview
+
+Add your project screenshot here after deployment.
+
+---
+
+## ✨ Features
+
+- ✅ Add new tasks
+- ✅ Edit existing tasks
+- ✅ Delete tasks
+- ✅ Mark tasks as completed
+- ✅ Search tasks
+- ✅ Filter by All / Active / Completed
+- ✅ Filter tasks by category
+- ✅ Task priority system
+- ✅ Sort by Newest / Oldest / Priority
+- ✅ Due date support
+- ✅ Progress percentage
+- ✅ Dashboard statistics
+- ✅ Category-wise task statistics
+- ✅ Clear completed tasks
+- ✅ Delete all tasks
+- ✅ Dark Mode
+- ✅ Theme persistence after refresh
+- ✅ LocalStorage data persistence
+- ✅ Responsive design
+- ✅ Empty state
+- ✅ Smooth UI transitions
+
+---
+
+## 🛠️ Technologies Used
+
+- React.js
+- JavaScript
+- Tailwind CSS
+- Vite
+- HTML5
+- CSS3
+- LocalStorage
+- React Hooks
+
+---
+
+## 📂 Project Structure
+
+```text
+react-todo-list-app/
+│
+├── public/
+│
+├── src/
+│   │
+│   ├── assets/
+│   │
+│   ├── components/
+│   │   ├── Header.jsx
+│   │   ├── TodoForm.jsx
+│   │   ├── TodoList.jsx
+│   │   ├── TodoItem.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── SearchBar.jsx
+│   │   ├── FilterBar.jsx
+│   │   ├── StatsBar.jsx
+│   │   ├── ProgressBar.jsx
+│   │   └── ThemeToggle.jsx
+│   │
+│   ├── hooks/
+│   │   ├── useLocalStrorage.js
+│   │   └── useTheme.js
+│   │
+│   ├── utils/
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+│
+├── package.json
+├── vite.config.js
+├── tailwind.config.js
+└── README.md
+
+## Author
+
+sonu kumar 
+
+GitHub:https://github.com/sonuThakurCsit
+
+linkedIN : https://www.linkedin.com/in/sonu-kumar-a9202b415/
