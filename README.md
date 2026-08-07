@@ -8,13 +8,13 @@ This project was created to practice React fundamentals, component-based archite
 
 ## 🚀 Live Demo
 
-🔗 Live Demo: Coming Soon
+🔗 [View Live Demo](https://react-todo-list-app-dun.vercel.app/)
 
 ---
 
 ## 📸 Preview
 
-Add your project screenshot here after deployment.
+![React Todo List App](./src/assets/todo-preview.png)
 
 ---
 
