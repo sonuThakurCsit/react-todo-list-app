@@ -123,6 +123,18 @@ function App() {
 
   const activeTasks = totalTasks - completedTasks;
 
+  const categoryCounts = {
+    Study: todos.filter((todo) => todo.category === "Study").length,
+
+    Work: todos.filter((todo) => todo.category === "Work").length,
+
+    Personal: todos.filter((todo) => todo.category === "Personal").length,
+
+    Shopping: todos.filter((todo) => todo.category === "Shopping").length,
+
+    Health: todos.filter((todo) => todo.category === "Health").length,
+  };
+
   const progress =
     totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
 
@@ -161,6 +173,7 @@ function App() {
           activeTasks={activeTasks}
           completedTasks={completedTasks}
           progress={progress}
+          categoryCounts={categoryCounts}
         />
 
         <ProgressBar progress={progress} />
