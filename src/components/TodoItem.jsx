@@ -138,8 +138,8 @@ function TodoItem({ todo, deleteTodo, toggleTodo, updateTodo }) {
               <h3
                 className={`text-lg font-semibold ${
                   todo.completed
-                    ? "line-through text-gray-400"
-                    : "text-gray-800"
+                    ? "line-through text-gray-400 dark:text-gray-500"
+                    : "text-gray-800 dark:text-white"
                 }`}
               >
                 {todo.text}
